@@ -1,0 +1,4 @@
+//
+chrome.exe
+msnmsgr.exe
+Skype.exe
