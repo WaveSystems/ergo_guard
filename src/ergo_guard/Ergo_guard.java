@@ -17,13 +17,17 @@ public class Ergo_guard {
   public static void main(String[] args) throws InterruptedException {
       Thread pd = new Process_detector();
       Thread nt = new Notifications();
-       
-//      nt.start();
-//      pd.start();
-    
       
-    
+      Random random = new Random();
       
-      Exercises.createWindow();
+      nt.start();
+      pd.start();
+      
+      for(;;){
+          int n = 10000 - 5000 + 1;
+          int i = random.nextInt() % n;
+          Thread.sleep(5000 + i);
+          Exercises.createWindow();
+      }
   }
 }

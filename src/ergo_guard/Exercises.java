@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -38,11 +40,40 @@ public class Exercises extends JFrame{
         img = Toolkit.getDefaultToolkit().createImage(imgBg);
         
         JPanel panel = new PicturePanel();
+        
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayout(3,10));
+        panel2.setOpaque(false);
+        
         JLabel legend = new JLabel("Has pasado mucho tiempo en la computadora");
-        
+        Font f = new Font("Tahoma", Font.BOLD, 20);
+        legend.setFont(f);
+        if(imgBg.equals("imgs/background/zen_2.jpg"))
+            legend.setForeground(Color.white);   //Set text color
+        else
+            legend.setForeground(Color.black    );   //Set text color
         legend.setOpaque(false);
+
+        String[] bodyExer = bodyPart(4);
         
-        panel.add(legend);
+        Random rn = new Random();
+        
+        JLabel exerPic = new JLabel("",SwingConstants.CENTER);
+        exerPic.setLocation(200, 200);
+        
+        ImageIcon imgExer = new ImageIcon(bodyExer[rn.nextInt(5)]);
+        exerPic.setIcon(imgExer);
+        
+        panel2.add(legend);
+        panel2.add(exerPic);
+        
+        Box box = Box.createVerticalBox();
+        box.add(Box.createVerticalGlue());
+        box.add(panel2);
+        box.add(Box.createVerticalGlue());
+        
+        panel.add(box);
+        
         add(panel);
         
         setPreferredSize(new Dimension(800, 600));
@@ -50,6 +81,7 @@ public class Exercises extends JFrame{
         setUndecorated(true);
         setResizable(false);
     }
+    
     
     private Dimension exercisePosition(){
         //Se obtiene las dimenciones de la pantalla
@@ -69,6 +101,38 @@ public class Exercises extends JFrame{
             g.drawImage(img,0,0,this);
         }
     }
+    
+    static String[] bodyPart(int T){
+        String head[] = {"imgs/exercises/E1_1.jpg",
+            "imgs/exercises/E1_2.jpg"};
+        
+        String shoulder[] = {"imgs/exercises/E2_1.jpg",
+            "imgs/exercises/E2_2.jpg",
+            "imgs/exercises/E2_3.jpg",
+            "imgs/exercises/E2_4.jpg"};
+        
+        String wrist[] ={"imgs/exercises/E3_1.jpg",
+            "imgs/exercises/E3_2.jpg",
+            "imgs/exercises/E3_3.jpg",
+            "imgs/exercises/E3_4.jpg"};
+        
+        if(T==1)
+            return head;
+        
+        if(T==2)
+            return shoulder;
+        
+        if(T==3)
+            return wrist;
+        
+        String random[] = {"imgs/exercises/E1_1.jpg",
+            "imgs/exercises/E2_1.jpg",
+            "imgs/exercises/E2_4.jpg",
+            "imgs/exercises/E3_2.jpg",
+            "imgs/exercises/E3_3.jpg"};
+        
+        return random;
+    }
 
     static void createWindow() {
         
@@ -76,11 +140,18 @@ public class Exercises extends JFrame{
         
         //Se le da posicion
         Dimension position = exercise.exercisePosition();
-        
-        
+
         exercise.setLocation((position.width/2)-400, (position.height/2)-300);
         exercise.pack();
         exercise.setVisible(true);
                 
+        try {
+            //Elimina la alerta despues de 5 segundos
+            Thread.sleep (5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        exercise.setVisible (false);
+        exercise.dispose();
     }
 }

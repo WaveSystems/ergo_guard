@@ -50,6 +50,16 @@ public class Notifications extends Thread {
     
     public void run() {
         
+        for(;;){
+        Random random = new Random();
+        int n = 10000 - 5000 + 1;
+        int i = random.nextInt() % n;
+        try {
+            Thread.sleep(5000 + i);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         Notifications notify = new Notifications();
         
         //Esta variable se usara para modificar la fuente de los textos
@@ -97,6 +107,7 @@ public class Notifications extends Thread {
         }
         alert.setVisible (false);
         alert.dispose();
+        }
     }
     
 }
