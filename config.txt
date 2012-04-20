@@ -1,4 +1,4 @@
-//
 chrome.exe
 msnmsgr.exe
 Skype.exe
+WINWORD.EXE

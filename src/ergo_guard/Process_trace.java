@@ -123,6 +123,8 @@ public class Process_trace {
             procc.setElapsed(temp);
             procs.set(procc);
             
+            System.out.println("This is the process traced: " + procc.getName());
+            System.out.println("This is the time elapsed: " + procc.getElapsed());
         }
     }
     
