@@ -157,4 +157,42 @@ public class Process_trace {
             }
         }
     }
+    
+    public long[][] processesTimes(){
+        
+         ListIterator<process> procs = processes.listIterator();
+        int countl = 0;
+        long timel = 0;
+        int counte = 0;
+        long timee = 0;
+        int countw = 0;
+        long timew = 0;
+        
+        while(procs.hasNext()){
+            process procc = procs.next();
+            
+            if(procc.getType().equals("leisure")){
+                timel += procc.getElapsed();
+                countl ++;
+            }
+            
+            if(procc.getType().equals("entertainment")){
+                timee += procc.getElapsed();
+                counte ++;
+            }
+            
+            if(procc.getType().equals("work")){
+                timew += procc.getElapsed();
+                countw ++;
+            }
+        }
+        
+        long times[][] = {
+            {countl, timel},
+            {counte, timee},
+            {countw, timew}
+        };
+        
+        return times;
+    }
 }
