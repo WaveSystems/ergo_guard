@@ -8,22 +8,28 @@ import java.util.*;
 
 public class Ergo_guard {
     
-  private Ergo_guard() {;}
-
-  public static void main(String[] args) throws InterruptedException {
-      Thread pd = new Process_detector();
-      Thread nt = new Notifications();
-      
-      Random random = new Random();
-      
-      nt.start();
-      pd.start();
-      
-      for(;;){
-          int n = 10000 - 5000 + 1;
-          int i = random.nextInt() % n;
-          Thread.sleep(5000 + i);
-          Exercises.createWindow();
-      }
-  }
+    static boolean exerRun;
+    static boolean notiRun;
+    
+    private Ergo_guard() {
+        exerRun = false;
+        notiRun = false;
+    }
+    
+    public static void main(String[] args) throws InterruptedException {
+        Thread pd = new Process_detector();
+        Thread nt = new Notifications();
+        
+        Random random = new Random();
+        
+        nt.start();
+        pd.start();
+        
+        for(;;){
+            int n = 20000 - 8000 + 1;
+            int i = random.nextInt() % n;
+            Thread.sleep(8000 + i);
+            Exercises.createWindow();
+        }
+    }
 }

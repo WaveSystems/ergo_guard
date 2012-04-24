@@ -138,20 +138,33 @@ public class Exercises extends JFrame{
         
         Exercises exercise = new Exercises();
         
+        Ergo_guard.exerRun = true;
+        
+        if(Ergo_guard.notiRun){
+            try {
+                Thread.sleep (5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         //Se le da posicion
         Dimension position = exercise.exercisePosition();
-
+        
         exercise.setLocation((position.width/2)-400, (position.height/2)-300);
         exercise.pack();
         exercise.setVisible(true);
-                
+        
         try {
-            //Elimina la alerta despues de 5 segundos
-            Thread.sleep (5000);
+            //Espera 5 segundos
+            Thread.sleep (5000);            
         } catch (InterruptedException ex) {
             Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         exercise.setVisible (false);
         exercise.dispose();
+        
+        Ergo_guard.exerRun = false;
     }
 }
