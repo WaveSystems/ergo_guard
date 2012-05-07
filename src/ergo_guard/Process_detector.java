@@ -82,7 +82,6 @@ public class Process_detector extends Thread {
     }
     
     public static void brainFlags(long[][] times){
-        System.out.println("Entered brain");
         
         long leisure[] = {times[0][0],times[0][1]};
         long entertainment[] = {times[1][0],times[1][1]};

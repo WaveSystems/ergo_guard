@@ -88,7 +88,6 @@ public class Process_trace {
             }
             
             if(exist == false){
-                System.out.println("Added");
                 process procTracing = new process(process);
                 
                 size = leisure.length;
@@ -112,9 +111,6 @@ public class Process_trace {
                         procTracing.setType("work");
                 }
                 
-                System.out.println("This is the process to add: " + procTracing.getName());
-                System.out.println("This is the type of the process: " + procTracing.getType());
-                
                 processes.add(procTracing);
             }
         }
@@ -130,9 +126,6 @@ public class Process_trace {
             temp = cal.getTimeInMillis()/1000;
             procc.setElapsed(temp);
             procs.set(procc);
-            
-            System.out.println("This is the process traced: " + procc.getName());
-            System.out.println("This is the time elapsed: " + procc.getElapsed());
         }
     }
     
@@ -160,7 +153,6 @@ public class Process_trace {
             }
             
             if(!exist){
-                System.out.println("Doesnt exist " + procc.getName());
                 proccs.remove();
             }
         }
