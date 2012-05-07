@@ -28,9 +28,9 @@ public class Ergo_guard {
         ty.start();
         
         for(;;){
-            int n = 20000 - 8000 + 1;
+            int n = 2700000 - 1800000 + 1;
             int i = random.nextInt() % n;
-            Thread.sleep(8000 + i);
+            Thread.sleep(1800000 + i);
             Exercises.createWindow();
         }
     }

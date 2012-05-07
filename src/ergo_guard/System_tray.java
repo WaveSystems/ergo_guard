@@ -18,11 +18,7 @@ public class System_tray{
     ex = new MenuItem("Exit");
 
     ex.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            throw new UnsupportedOperationException("Not supported yet.");
-            System.exit(0);
-        }
+        System.exit(0);
     }
             
     popup.add(ex);

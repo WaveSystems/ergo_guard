@@ -142,7 +142,7 @@ public class Exercises extends JFrame{
         
         if(Ergo_guard.notiRun){
             try {
-                Thread.sleep (5000);
+                Thread.sleep (30000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
             }

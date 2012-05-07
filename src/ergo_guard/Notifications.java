@@ -53,11 +53,11 @@ public class Notifications extends Thread {
         for(;;){
             
             Random random = new Random();
-            int n = 10000 - 5000 + 1;
+            int n = 2400000 - 1500000 + 1;
             int i = random.nextInt() % n;
             
             try {
-                Thread.sleep(5000 + i);
+                Thread.sleep(1500000 + i);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -107,7 +107,7 @@ public class Notifications extends Thread {
                 alert.setVisible(true);
                 try {
                     //Elimina la alerta despues de 5 segundos
-                    Thread.sleep (5000);
+                    Thread.sleep (30000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
                 }
