@@ -16,15 +16,14 @@ public class System_tray{
     img = Toolkit.getDefaultToolkit().getImage("/imgs/system_tray/system_tray.png");
     popup = new PopupMenu();
     ex = new MenuItem("Exit");
+  }
+
+  public void create_tray_icon() {
 
     ex.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            throw new UnsupportedOperationException("Not supported yet.");
-            System.exit(0);
-        }
+      System.exit(0);
     }
-            
+
     popup.add(ex);
     TrayIcon trayIcon = new TrayIcon(img, "Tray Demo", popup);
     try {
@@ -32,9 +31,5 @@ public class System_tray{
     } catch (AWTException e) {
       System.err.println("Problem loading Tray icon");
     }
-  }
-
-  public void main(String[] args) {
-    new System_tray();
   }
 }

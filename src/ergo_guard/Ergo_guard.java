@@ -25,7 +25,7 @@ public class Ergo_guard {
         
         nt.start();
         pd.start();
-        ty.start();
+        ty.create_tray_icon();
         
         for(;;){
             int n = 20000 - 8000 + 1;
