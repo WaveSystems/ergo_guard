@@ -19,11 +19,13 @@ public class Ergo_guard {
     public static void main(String[] args) throws InterruptedException {
         Thread pd = new Process_detector();
         Thread nt = new Notifications();
+        Thread ty = new SystemTray();
         
         Random random = new Random();
         
         nt.start();
         pd.start();
+        ty.start();
         
         for(;;){
             int n = 20000 - 8000 + 1;
