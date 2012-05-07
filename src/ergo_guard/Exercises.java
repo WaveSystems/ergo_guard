@@ -53,15 +53,15 @@ public class Exercises extends JFrame{
         else
             legend.setForeground(Color.black    );   //Set text color
         legend.setOpaque(false);
-
-        String[] bodyExer = bodyPart(4);
+        
+        String[] bodyExer = bodyPart();
         
         Random rn = new Random();
         
         JLabel exerPic = new JLabel("",SwingConstants.CENTER);
         exerPic.setLocation(200, 200);
         
-        ImageIcon imgExer = new ImageIcon(bodyExer[rn.nextInt(5)]);
+        ImageIcon imgExer = new ImageIcon(bodyExer[rn.nextInt(bodyExer.length)]);
         exerPic.setIcon(imgExer);
         
         panel2.add(legend);
@@ -102,34 +102,68 @@ public class Exercises extends JFrame{
         }
     }
     
-    static String[] bodyPart(int T){
-        String head[] = {"imgs/exercises/E1_1.jpg",
-            "imgs/exercises/E1_2.jpg"};
+    static String[] bodyPart(){
+        String work[] = {"imgs/exercises/E3-1.jpg",
+            "imgs/exercises/E3-3.jpg",
+            "imgs/exercises/E3-4.jpg",
+            "imgs/exercises/E7-1.jpg",
+            "imgs/exercises/E7-3.jpg"};
         
-        String shoulder[] = {"imgs/exercises/E2_1.jpg",
-            "imgs/exercises/E2_2.jpg",
-            "imgs/exercises/E2_3.jpg",
-            "imgs/exercises/E2_4.jpg"};
+        String leisure[] = {"imgs/exercises/E2-1.jpg",
+            "imgs/exercises/E2-2.jpg",
+            "imgs/exercises/E3-2.jpg"};
         
-        String wrist[] ={"imgs/exercises/E3_1.jpg",
-            "imgs/exercises/E3_2.jpg",
-            "imgs/exercises/E3_3.jpg",
-            "imgs/exercises/E3_4.jpg"};
+        String entertainment[] ={"imgs/exercises/E1-1.jpg",
+            "imgs/exercises/E1-2.jpg",
+            "imgs/exercises/E7-3.jpg"};
         
-        if(T==1)
-            return head;
+        if(!Process_detector.workFlag)
+            return work;
         
-        if(T==2)
-            return shoulder;
+        if(!Process_detector.leisureFlag)
+            return leisure;
         
-        if(T==3)
-            return wrist;
+        if(!Process_detector.entertainmentFlag)
+            return entertainment;
         
-        String random[] = {"imgs/exercises/E1_1.jpg",
-            "imgs/exercises/E2_1.jpg",
-            "imgs/exercises/E2_4.jpg",
-            "imgs/exercises/E3_2.jpg",
-            "imgs/exercises/E3_3.jpg"};
+        if(!Process_detector.workFlag && !Process_detector.leisureFlag){
+            String temp1[] = {"imgs/exercises/E3-1.jpg",
+                "imgs/exercises/E3-3.jpg",
+                "imgs/exercises/E3-4.jpg",
+                "imgs/exercises/E7-1.jpg",
+                "imgs/exercises/E7-3.jpg",
+                "imgs/exercises/E2-1.jpg",
+                "imgs/exercises/E2-2.jpg",
+                "imgs/exercises/E3-2.jpg"};
+            return temp1;
+        }
+        
+        if(!Process_detector.workFlag && !Process_detector.entertainmentFlag){
+            String temp2[] = {"imgs/exercises/E3-1.jpg",
+                "imgs/exercises/E3-3.jpg",
+                "imgs/exercises/E3-4.jpg",
+                "imgs/exercises/E7-1.jpg",
+                "imgs/exercises/E7-3.jpg",
+                "imgs/exercises/E1-1.jpg",
+                "imgs/exercises/E1-2.jpg",
+                "imgs/exercises/E7-3.jpg"};
+            return temp2;
+        }
+        
+        if(!Process_detector.leisureFlag && !Process_detector.entertainmentFlag){
+            String temp3[] = {"imgs/exercises/E2-1.jpg",
+                "imgs/exercises/E2-2.jpg",
+                "imgs/exercises/E3-2.jpg",
+                "imgs/exercises/E1-1.jpg",
+                "imgs/exercises/E1-2.jpg",
+                "imgs/exercises/E7-3.jpg"};
+            return temp3;
+        }
+        
+        String random[] = {"imgs/exercises/E2-1.jpg",
+            "imgs/exercises/E2-2.jpg",
+            "imgs/exercises/E3-2.jpg",
+            "imgs/exercises/E3-4.jpg"};
         
         return random;
     }

@@ -15,7 +15,15 @@ import java.util.logging.Logger;
 
 public class Process_detector extends Thread {
     
-    public Process_detector() {;}
+    static boolean leisureFlag;
+    static boolean workFlag;
+    static boolean entertainmentFlag;
+    
+    public Process_detector() {
+        leisureFlag = false;
+        workFlag = false;
+        entertainmentFlag = false;
+    }
     
     static String writeVbScript(){
         try{
@@ -74,19 +82,25 @@ public class Process_detector extends Thread {
     }
     
     public static void brainFlags(long[][] times){
-        System.out.println("Entered brain");
         
         long leisure[] = {times[0][0],times[0][1]};
         long entertainment[] = {times[1][0],times[1][1]};
         long work[] = {times[2][0],times[2][1]};
         
-        System.out.println("Leisure 0:" + leisure[0]);
-        System.out.println("Leisure 1:" + leisure[1]);
-        System.out.println("Entertainment 0:" + entertainment[0]);
-        System.out.println("Entertainment 1:" + entertainment[1]);
-        System.out.println("Work 0:" + work[0]);
-        System.out.println("Work 1:" + work[1]);
+        if(leisure[0]>=1620)
+            leisureFlag = true;
+        if(work[0]>=1200)
+            workFlag = true;
+        if(entertainment[0]>=1500)
+            entertainmentFlag = true;
         
+        if(leisure[1]>work[1] && leisure[1]>entertainment[1])            
+            Ergo_guard.exerTime = 2400000;
+        if(work[1]>leisure[1] && work[1]>entertainment[1])
+            Ergo_guard.exerTime = 1500000;
+        if(entertainment[1]>leisure[1] && entertainment[1]>work[1])
+            Ergo_guard.exerTime = 3000000;
+            
     }
     
     public void run(){
