@@ -13,7 +13,7 @@ public class System_tray{
 
   public System_tray(){
     tray = SystemTray.getSystemTray();
-    img = Toolkit.getDefaultToolkit().getImage("/imgs/system_tray/system_tray.png");
+    img = Toolkit.getDefaultToolkit().getImage("imgs/system_tray/system_tray.png");
     popup = new PopupMenu();
     ex = new MenuItem("Exit");
   }
@@ -21,8 +21,12 @@ public class System_tray{
   public void create_tray_icon() {
 
     ex.addActionListener(new ActionListener() {
-      System.exit(0);
-    }
+
+      public void actionPerformed(ActionEvent evt) {
+        System.exit(0);
+      }
+
+    });
 
     popup.add(ex);
     TrayIcon trayIcon = new TrayIcon(img, "Tray Demo", popup);
