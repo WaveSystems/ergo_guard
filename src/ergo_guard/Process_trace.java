@@ -219,17 +219,17 @@ public class Process_trace {
                     countw = tempContw;
             }
         }
-        if(findl == false){
+        if(!findl){
             countl = 0;
             timel[0] = 0;
             timel[1] = 0;
         }
-        if(finde == false){
+        if(!finde){
             counte = 0;
             timee[0] = 0;
             timee[1] = 0;
         }
-        if(findw == false){
+        if(!findw){
             countw = 0;
             timew[0] = 0;
             timew[1] = 0;
