@@ -95,6 +95,13 @@ public class Process_detector extends Thread {
         if(entertainment[0]>=1500)
             entertainmentFlag = true;
         
+        if(leisure[1]>work[1] && leisure[1]>entertainment[1])            
+            Ergo_guard.exerTime = 2400000;
+        if(work[1]>leisure[1] && work[1]>entertainment[1])
+            Ergo_guard.exerTime = 1500000;
+        if(entertainment[1]>leisure[1] && entertainment[1]>work[1])
+            Ergo_guard.exerTime = 3000000;
+            
     }
     
     public void run(){
