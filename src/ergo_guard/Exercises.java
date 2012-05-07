@@ -56,6 +56,10 @@ public class Exercises extends JFrame{
         
         String[] bodyExer = bodyPart();
         
+        Process_detector.entertainmentFlag = false;
+        Process_detector.leisureFlag = false;
+        Process_detector.workFlag = false;
+        
         Random rn = new Random();
         
         JLabel exerPic = new JLabel("",SwingConstants.CENTER);
