@@ -17,6 +17,14 @@ public class Process_trace {
     public String work[]={"WINWORD.EXE","EXCEL.EXE","MSACCESS.EXE","MSPUB.EXE","POWERPNT.EXE"};
     public List<process> processes = new ArrayList<process>();
     
+    int countl = 0;
+    long timel[] = {0,0};
+    int counte = 0;
+    long timee[] = {0,0};
+    int countw = 0;
+    long timew[] = {0,0};
+    long tempTime = 0;
+    
     class process {
         String name;
         String type;
@@ -160,37 +168,77 @@ public class Process_trace {
     
     public long[][] processesTimes(){
         
-         ListIterator<process> procs = processes.listIterator();
-        int countl = 0;
-        long timel = 0;
-        int counte = 0;
-        long timee = 0;
-        int countw = 0;
-        long timew = 0;
+        ListIterator<process> procs = processes.listIterator();
+        Calendar cal = Calendar.getInstance();
+        boolean findl = false;
+        boolean finde = false;
+        boolean findw = false;
+        int tempContl = 0;
+        int tempConte = 0;
+        int tempContw = 0;
         
         while(procs.hasNext()){
+
             process procc = procs.next();
             
             if(procc.getType().equals("leisure")){
-                timel += procc.getElapsed();
-                countl ++;
+                findl = true;
+                if(timel[0] == 0){
+                    timel[0]= cal.getTimeInMillis()/1000;
+                }else{
+                    timel[1] = (cal.getTimeInMillis()/1000) - timel[0];
+                }
+                tempContl ++;
+                if(tempContl > countl)
+                    countl = tempContl;
             }
+            
             
             if(procc.getType().equals("entertainment")){
-                timee += procc.getElapsed();
-                counte ++;
+                finde = true;
+                if(timee[0] == 0){
+                    timee[0]= cal.getTimeInMillis()/1000;
+                }else{
+                    timee[1] = (cal.getTimeInMillis()/1000) - timee[0];
+                }
+                tempConte ++;
+                if(tempConte > counte)
+                    counte = tempConte;
             }
             
+            
             if(procc.getType().equals("work")){
-                timew += procc.getElapsed();
-                countw ++;
+                findw = true;
+                if(timew[0] == 0){
+                    timew[0]= cal.getTimeInMillis()/1000;
+                }else{
+                    timew[1] = (cal.getTimeInMillis()/1000) - timew[0];
+                }
+                tempContw ++;
+                if(tempContw > countw)
+                    countw = tempContw;
             }
+        }
+        if(findl == false){
+            countl = 0;
+            timel[0] = 0;
+            timel[1] = 0;
+        }
+        if(finde == false){
+            counte = 0;
+            timee[0] = 0;
+            timee[1] = 0;
+        }
+        if(findw == false){
+            countw = 0;
+            timew[0] = 0;
+            timew[1] = 0;
         }
         
         long times[][] = {
-            {countl, timel},
-            {counte, timee},
-            {countw, timew}
+            {countl, timel[1]},
+            {counte, timee[1]},
+            {countw, timew[1]}
         };
         
         return times;
