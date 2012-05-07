@@ -20,9 +20,7 @@ public class System_tray{
 
   public void create_tray_icon() {
 
-    ex.addActionListener(new ActionListener() {
-      System.exit(0);
-    }
+    ex.addActionListener(this);
 
     popup.add(ex);
     TrayIcon trayIcon = new TrayIcon(img, "Tray Demo", popup);
@@ -31,5 +29,8 @@ public class System_tray{
     } catch (AWTException e) {
       System.err.println("Problem loading Tray icon");
     }
+  }
+  public void actionPerformed(ActionEvent evt) {
+      System.exit(0);
   }
 }
