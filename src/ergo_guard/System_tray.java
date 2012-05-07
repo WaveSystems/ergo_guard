@@ -13,7 +13,7 @@ public class SystemTray {
 
   public SystemTray(){
     tray = SystemTray.getSystemTray();
-    img = Toolkit.getDefaultToolkit().getImage("c:/Java/Apps/gui/tray.png");
+    img = Toolkit.getDefaultToolkit().getImage("/imgs/system_tray/system_tray.png");
     popup = new PopupMenu();
     exit = new MenuItem("Exit");
 
