@@ -61,7 +61,7 @@ public class Exercises extends JFrame{
         JLabel exerPic = new JLabel("",SwingConstants.CENTER);
         exerPic.setLocation(200, 200);
         
-        ImageIcon imgExer = new ImageIcon(bodyExer[rn.nextInt(5)]);
+        ImageIcon imgExer = new ImageIcon(bodyExer[rn.nextInt(bodyExer.length)]);
         exerPic.setIcon(imgExer);
         
         panel2.add(legend);
