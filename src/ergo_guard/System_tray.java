@@ -4,23 +4,28 @@ import java.util.*;
 import java.awt.*; 
 import java.awt.event.*; 
 
-public class SystemTray {
+public class System_tray{
 
   private SystemTray tray;
   private Image img;
   private PopupMenu popup;
-  private MenuItem exit;
+  private MenuItem ex;
 
-  public SystemTray(){
+  public System_tray(){
     tray = SystemTray.getSystemTray();
     img = Toolkit.getDefaultToolkit().getImage("/imgs/system_tray/system_tray.png");
     popup = new PopupMenu();
-    exit = new MenuItem("Exit");
+    ex = new MenuItem("Exit");
 
-    exit.addActionListener(new ActionListener() {
-      System.exit(0);
+    ex.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            throw new UnsupportedOperationException("Not supported yet.");
+            System.exit(0);
+        }
     }
-    popup.add(exit);
+            
+    popup.add(ex);
     TrayIcon trayIcon = new TrayIcon(img, "Tray Demo", popup);
     try {
       tray.add(trayIcon);
@@ -29,7 +34,7 @@ public class SystemTray {
     }
   }
 
-  public void run() {
-    new SystemTray();
+  public void main(String[] args) {
+    new System_tray();
   }
 }

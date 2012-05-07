@@ -19,7 +19,7 @@ public class Ergo_guard {
     public static void main(String[] args) throws InterruptedException {
         Thread pd = new Process_detector();
         Thread nt = new Notifications();
-        Thread ty = new SystemTray();
+        System_tray ty = new System_tray();
         
         Random random = new Random();
         
