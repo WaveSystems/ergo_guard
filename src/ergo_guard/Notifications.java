@@ -49,73 +49,72 @@ public class Notifications extends Thread {
     }
     
     public void run() {
-        
-        for(;;){
-            
-            Random random = new Random();
-            int n = 2400000 - 1500000 + 1;
-            int i = random.nextInt() % n;
-            
-            try {
-                Thread.sleep(1500000 + i);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                
-            if(!Ergo_guard.exerRun){               
-                
-                Ergo_guard.notiRun = true;
-                
-                Notifications notify = new Notifications();
-                
-                //Esta variable se usara para modificar la fuente de los textos
-                Font f = new Font("Tahoma", Font.BOLD, 16);
-                
-                //Se instancia un JFrame que se donde se despliegue la alerta
-                final JFrame alert = new JFrame("Alerta");
-                
-                //Gives margin for the JTexTArea
-                UIManager.put("TextArea.margin", new Insets(10,10,10,10));
-                
-                //Se genera el texto que tendra el JFrame
-                JTextArea textAlert = new JTextArea(notify.alertText());
-                
-                Color coulor = new Color(46,46,46);
-                
-                //Se el dan ciertas propeidades como que WRAP, Font, Dimension
-                textAlert.setBackground(coulor);   
-                textAlert.setForeground(Color.white);   //Set text color
-                textAlert.setWrapStyleWord(true);
-                textAlert.setLineWrap(true);
-                textAlert.setEditable(false);
-                textAlert.setPreferredSize(new Dimension(300, 120));
-                textAlert.setFont(f);
-                
-                //Se instancia la funcion que determina el tamano de pantalla
-                Dimension position = notify.alertPosition();
-                
-                //Se dan propiedades al JFrame
-                alert.setSize(400, 600);
-                alert.setLocation(position.width-320, 180);
-                alert.setUndecorated(true);     //Remove border
-                
-                //Se le pasa elJText al JFrame
-                alert.getContentPane().add(textAlert, BorderLayout.CENTER);
-                
-                //Se despliega el JFrame
-                alert.pack(); 
-                alert.setVisible(true);
+        if(!Ergo_guard.active){
+            for(;;){ 
+                Random random = new Random();
+                int n = random.nextInt(Math.abs(2400000 - 1500000));
+
                 try {
-                    //Elimina la alerta despues de 5 segundos
-                    Thread.sleep (30000);
+                    Thread.sleep(1500000 + n);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                alert.setVisible (false);
-                alert.dispose();
-                
-                Ergo_guard.notiRun = false;
+
+                if(!Ergo_guard.exerRun){               
+
+                    Ergo_guard.notiRun = true;
+
+                    Notifications notify = new Notifications();
+
+                    //Esta variable se usara para modificar la fuente de los textos
+                    Font f = new Font("Tahoma", Font.BOLD, 16);
+
+                    //Se instancia un JFrame que se donde se despliegue la alerta
+                    final JFrame alert = new JFrame("Alerta");
+
+                    //Gives margin for the JTexTArea
+                    UIManager.put("TextArea.margin", new Insets(10,10,10,10));
+
+                    //Se genera el texto que tendra el JFrame
+                    JTextArea textAlert = new JTextArea(notify.alertText());
+
+                    Color coulor = new Color(46,46,46);
+
+                    //Se el dan ciertas propeidades como que WRAP, Font, Dimension
+                    textAlert.setBackground(coulor);   
+                    textAlert.setForeground(Color.white);   //Set text color
+                    textAlert.setWrapStyleWord(true);
+                    textAlert.setLineWrap(true);
+                    textAlert.setEditable(false);
+                    textAlert.setPreferredSize(new Dimension(300, 120));
+                    textAlert.setFont(f);
+
+                    //Se instancia la funcion que determina el tamano de pantalla
+                    Dimension position = notify.alertPosition();
+
+                    //Se dan propiedades al JFrame
+                    alert.setSize(400, 600);
+                    alert.setLocation(position.width-320, 180);
+                    alert.setUndecorated(true);     //Remove border
+
+                    //Se le pasa elJText al JFrame
+                    alert.getContentPane().add(textAlert, BorderLayout.CENTER);
+
+                    //Se despliega el JFrame
+                    alert.pack(); 
+                    alert.setVisible(true);
+                    try {
+                        //Elimina la alerta despues de 5 segundos
+                        Thread.sleep (30000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    alert.setVisible (false);
+                    alert.dispose();
+
+                    Ergo_guard.notiRun = false;
+                }
             }
         }
     }
