@@ -177,7 +177,7 @@ public class Exercises extends JFrame{
         Exercises exercise = new Exercises();
         
         Ergo_guard.exerRun = true;
-        
+        System.out.println("Entered excer");
         if(Ergo_guard.notiRun){
             try {
                 Thread.sleep (30000);

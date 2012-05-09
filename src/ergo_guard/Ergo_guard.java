@@ -10,11 +10,13 @@ public class Ergo_guard {
     
     static boolean exerRun;
     static boolean notiRun;
+    static boolean active;
     static int exerTime;
     
     private Ergo_guard() {
         exerRun = false;
         notiRun = false;
+        active = true;
         exerTime = 1800000;
     }
     
@@ -30,10 +32,11 @@ public class Ergo_guard {
         ty.create_tray_icon();
         
         for(;;){
-            int n = 2700000 - exerTime + 1;
-            int i = random.nextInt() % n;
-            Thread.sleep(exerTime + i);
-            Exercises.createWindow();
+            if(!active){
+                int n = random.nextInt(Math.abs(2700000 - exerTime));
+                Thread.sleep(exerTime + n);
+                Exercises.createWindow();
+            }
         }
     }
 }
