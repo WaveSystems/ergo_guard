@@ -40,9 +40,10 @@ public class Exercises extends JFrame{
         img = Toolkit.getDefaultToolkit().createImage(imgBg);
         
         JPanel panel = new PicturePanel();
+        panel.setSize(WIDTH, WIDTH);
         
         JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayout(3,10));
+        panel2.setPreferredSize(new Dimension(600, 600));
         panel2.setOpaque(false);
         
         JLabel legend = new JLabel("Has pasado mucho tiempo en la computadora");
@@ -63,20 +64,18 @@ public class Exercises extends JFrame{
         Random rn = new Random();
         
         JLabel exerPic = new JLabel("",SwingConstants.CENTER);
-        exerPic.setLocation(200, 200);
         
         ImageIcon imgExer = new ImageIcon(bodyExer[rn.nextInt(bodyExer.length)]);
         exerPic.setIcon(imgExer);
         
+        Dimension minSize = new Dimension(10, 180);
+        Dimension prefSize = new Dimension(10, 180);
+        Dimension maxSize = new Dimension(10, 180);
+        panel2.add(new Box.Filler(minSize, prefSize, maxSize));
         panel2.add(legend);
         panel2.add(exerPic);
-        
-        Box box = Box.createVerticalBox();
-        box.add(Box.createVerticalGlue());
-        box.add(panel2);
-        box.add(Box.createVerticalGlue());
-        
-        panel.add(box);
+
+        panel.add(panel2);
         
         add(panel);
         
