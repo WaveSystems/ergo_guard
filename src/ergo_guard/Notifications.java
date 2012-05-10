@@ -52,7 +52,7 @@ public class Notifications extends Thread {
         if(!Ergo_guard.active){
             for(;;){ 
                 Random random = new Random();
-                int n = random.nextInt(Math.abs(2400000 - 1500000));
+                int n = random.nextInt(Math.abs(1500000 - 1200000));
 
                 try {
                     Thread.sleep(1500000 + n);
