@@ -103,8 +103,8 @@ public class Notifications extends Thread {
                     //Se despliega el JFrame
                     alert.pack(); 
                     alert.setVisible(true);
+                    alert.requestFocus();
                     try {
-                        //Elimina la alerta despues de 5 segundos
                         Thread.sleep (30000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);

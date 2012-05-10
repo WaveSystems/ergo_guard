@@ -177,7 +177,6 @@ public class Exercises extends JFrame{
         Exercises exercise = new Exercises();
         
         Ergo_guard.exerRun = true;
-        System.out.println("Entered excer");
         if(Ergo_guard.notiRun){
             try {
                 Thread.sleep (30000);
@@ -192,10 +191,10 @@ public class Exercises extends JFrame{
         exercise.setLocation((position.width/2)-400, (position.height/2)-300);
         exercise.pack();
         exercise.setVisible(true);
+        exercise.requestFocus();
         
         try {
-            //Espera 5 segundos
-            Thread.sleep (5000);            
+            Thread.sleep (30000);            
         } catch (InterruptedException ex) {
             Logger.getLogger(Notifications.class.getName()).log(Level.SEVERE, null, ex);
         }
