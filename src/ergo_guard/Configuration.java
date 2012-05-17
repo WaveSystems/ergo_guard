@@ -4,6 +4,13 @@
  */
 package ergo_guard;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Alberto
@@ -16,7 +23,74 @@ public class Configuration extends javax.swing.JFrame {
     public Configuration() {
         initComponents();
     }
+static String writeVbScript(){
+        try{
+            //Se crea el archivo vb script
+            File script = new File("programs.vbs");
+            if(!script.exists()){
+                script.createNewFile();
 
+                FileWriter writeScript = new java.io.FileWriter(script);
+                
+                //Se llena el archivo vb (estas son las istricciones en en codigo basic para acceder al TASKLIST.EXE)
+                String vbs = "Const HKLM = &H80000002 'HKEY_LOCAL_MACHINE\n"
+                        + "strComputer = \".\"\n"
+                        + "strKey = \"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\\"\n"
+                        + "strEntry1a = \"DisplayName\"\n"
+                        + "strEntry1b = \"QuietDisplayName\"\n"
+                        + "Set objReg = GetObject(\"winmgmts://\" & strComputer & _\n"
+                        + "\"/root/default:StdRegProv\")\n"
+                        + "objReg.EnumKey HKLM, strKey, arrSubkeys\n"
+                        + "WScript.Echo \"Installed Applications\" & VbCrLf\n"
+                        + "For Each strSubkey In arrSubkeys\n"
+                        + "intRet1 = objReg.GetStringValue(HKLM, strKey & strSubkey, _\n"
+                        + "strEntry1a, strValue1)\n"
+                        + "If intRet1 <> 0 Then\n"
+                        + "objReg.GetStringValue HKLM, strKey & strSubkey, _\n"
+                        + "strEntry1b, strValue1\n"
+                        + "End If\n"
+                        + "If strValue1 <> \"\" Then\n"
+                        + "wscript.echo strValue1\n"
+                        + "End If\n"
+                        + "Next";
+                
+                writeScript.write(vbs);
+                writeScript.close();
+            }
+            
+            return script.getPath();
+        }catch(Exception e){
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+    
+    static List<String> executeScript(String script){
+        try{
+            List<String> processList = new ArrayList<String>();
+            
+            //Java ejecuta el script
+            Process p = Runtime.getRuntime().exec("cscript //NoLogo " + script);
+            BufferedReader input =
+                    new BufferedReader
+                    (new InputStreamReader(p.getInputStream()));
+            
+            //Java captura las lineas de informacion que proporciona el script
+            String line;
+            while ((line = input.readLine()) != null) {
+                System.out.println(line);
+                processList.add(line);
+            }
+            
+            input.close();
+          
+            return processList;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +112,14 @@ public class Configuration extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("¡Bienvenido! Gracias por usar Ergo-guard.");
@@ -132,9 +214,17 @@ public class Configuration extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here
+        String script = Configuration.writeVbScript();
+        List<String> processes = Configuration.executeScript(script);        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_formWindowActivated
+
     public static void main(String args[]) {
         /*
          * Set the Nimbus look and feel
@@ -166,12 +256,14 @@ public class Configuration extends javax.swing.JFrame {
         /*
          * Create and display the form
          */
+
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
                 new Configuration().setVisible(true);
             }
         });
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
