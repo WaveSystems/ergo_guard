@@ -52,7 +52,7 @@ public class Exercises extends JFrame{
         if(imgBg.equals("imgs/background/zen_2.jpg"))
             legend.setForeground(Color.white);   //Set text color
         else
-            legend.setForeground(Color.black    );   //Set text color
+            legend.setForeground(Color.black);   //Set text color
         legend.setOpaque(false);
         
         String[] bodyExer = bodyPart();
@@ -190,7 +190,7 @@ public class Exercises extends JFrame{
         exercise.setLocation((position.width/2)-400, (position.height/2)-300);
         exercise.pack();
         exercise.setVisible(true);
-        exercise.requestFocus();
+        exercise.toFront();
         
         try {
             Thread.sleep (30000);            
