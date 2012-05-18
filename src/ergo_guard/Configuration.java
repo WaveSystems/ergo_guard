@@ -16,6 +16,10 @@ import java.util.List;
  * @author Alberto
  */
 public class Configuration extends javax.swing.JFrame {
+    
+//    String supported [][] = {{"(?i).*chrome.*","chrome.exe"},{"(?i).*safari.*","safari.exe"},
+//        {"(?i).*internet.*explorer.*","iexplorer.exe"},{"(?i).*tibia.*","tibia.exe"},{"(?i).*vlc.*","vlc.exe"},
+//        {"(?i).*windows.*messenger.*","msnmsgr.exe"},{"(?i).*skype.*","Skype.exe"},{,},{,},{,},{,},{,}};
 
     /**
      * Creates new form Configuration
@@ -38,10 +42,9 @@ static String writeVbScript(){
                         + "strKey = \"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\\"\n"
                         + "strEntry1a = \"DisplayName\"\n"
                         + "strEntry1b = \"QuietDisplayName\"\n"
-                        + "Set objReg = GetObject(\"winmgmts://\" & strComputer & _\n"
-                        + "\"/root/default:StdRegProv\")\n"
+                        + "Set objReg = GetObject(\"winmgmts:{impersonationLevel=impersonate}//\" & _\n"
+                        + "strComputer & \"/root/default:StdRegProv\")\n"
                         + "objReg.EnumKey HKLM, strKey, arrSubkeys\n"
-                        + "WScript.Echo \"Installed Applications\" & VbCrLf\n"
                         + "For Each strSubkey In arrSubkeys\n"
                         + "intRet1 = objReg.GetStringValue(HKLM, strKey & strSubkey, _\n"
                         + "strEntry1a, strValue1)\n"
@@ -50,9 +53,10 @@ static String writeVbScript(){
                         + "strEntry1b, strValue1\n"
                         + "End If\n"
                         + "If strValue1 <> \"\" Then\n"
-                        + "wscript.echo strValue1\n"
+                        + "cscript.echo strValue1\n"
                         + "End If\n"
                         + "Next";
+                
                 
                 writeScript.write(vbs);
                 writeScript.close();
@@ -218,6 +222,11 @@ static String writeVbScript(){
         // TODO add your handling code here
         String script = Configuration.writeVbScript();
         List<String> processes = Configuration.executeScript(script);        
+        
+        String test = "Adobe Media Player";
+        if(test.matches("(?i).*adobe.*player.*")){
+            System.out.println("Encontrado");
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

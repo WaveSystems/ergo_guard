@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class Process_trace {
     
-    public String leisure[]={"chrome.exe","Safari.exe","iexplorer.exe","firefox.exe","Skype.exe","msnmsgr.exe"};
+    public String leisure[]={"chrome.exe","Safari.exe","iexplorer.exe","firefox.exe","Skype.exe","msnmsgr.exe","tibia.exe"};
     public String entertainment[]={"wmplayer.exe","iTunes.exe","vlc.exe"};
     public String work[]={"WINWORD.EXE","EXCEL.EXE","MSACCESS.EXE","MSPUB.EXE","POWERPNT.EXE"};
     public List<process> processes = new ArrayList<process>();

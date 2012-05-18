@@ -102,7 +102,9 @@ public class Notifications extends Thread {
                     //Se despliega el JFrame
                     alert.pack(); 
                     alert.setVisible(true);
+                    alert.toFront();
                     alert.requestFocus();
+                    
                     try {
                         Thread.sleep (30000);
                     } catch (InterruptedException ex) {
