@@ -4,6 +4,7 @@
  */
 package ergo_guard;
 
+import java.io.File;
 import java.util.*;
 
 public class Ergo_guard {
@@ -20,7 +21,7 @@ public class Ergo_guard {
         exerTime = 1800000;
     }
     
-    public static void main(String[] args) throws InterruptedException {
+    static void execute() throws InterruptedException{
         Thread pd = new Process_detector();
         Thread nt = new Notifications();
         System_tray ty = new System_tray();
@@ -37,6 +38,17 @@ public class Ergo_guard {
                 Thread.sleep(exerTime + n);
                 Exercises.createWindow();
             }
+        }
+    }
+    
+    public static void main(String[] args) throws InterruptedException {
+        File txt = new File("config.txt");
+        if(!txt.exists()){
+            Configuration config = new Configuration();
+            config.setVisible(true);
+            execute();
+        }else{
+            execute();
         }
     }
 }

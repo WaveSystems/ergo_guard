@@ -1,4 +1,10 @@
 chrome.exe
-msnmsgr.exe
+iTunes.exe
+wmplayer.exe
 Skype.exe
+msnmsgr.exe
 WINWORD.EXE
+EXCEL.EXE
+MSACCESS.EXE
+MSPUB.EXE
+POWERPNT.EXE

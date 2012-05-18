@@ -4,12 +4,14 @@
  */
 package ergo_guard;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -17,82 +19,17 @@ import java.util.List;
  */
 public class Configuration extends javax.swing.JFrame {
     
-//    String supported [][] = {{"(?i).*chrome.*","chrome.exe"},{"(?i).*safari.*","safari.exe"},
-//        {"(?i).*internet.*explorer.*","iexplorer.exe"},{"(?i).*tibia.*","tibia.exe"},{"(?i).*vlc.*","vlc.exe"},
-//        {"(?i).*windows.*messenger.*","msnmsgr.exe"},{"(?i).*skype.*","Skype.exe"},{,},{,},{,},{,},{,}};
-
+    String supported [][] = {{"Chrome","chrome.exe"},{"Fire Fox","firefox.exe"},{"Safari","Safari.exe"},
+        {"Internet Explorer","iexplorer.exe"},{"iTunes","iTunes.exe"},{"Windows Media Player","wmplayer.exe"},
+        {"VLC","vlc.exe"},{"Skype","Skype.exe"},{"Windows Live Messenger","msnmsgr.exe"},{"Microsoft Office","office"},
+        {"Ares","Ares.exe"},{"Adobe Reader","arm.exe"},{"Real Player","RealPlayer.exe"}};
+    ArrayList configFile = new ArrayList();
+    
     /**
      * Creates new form Configuration
      */
     public Configuration() {
         initComponents();
-    }
-static String writeVbScript(){
-        try{
-            //Se crea el archivo vb script
-            File script = new File("programs.vbs");
-            if(!script.exists()){
-                script.createNewFile();
-
-                FileWriter writeScript = new java.io.FileWriter(script);
-                
-                //Se llena el archivo vb (estas son las istricciones en en codigo basic para acceder al TASKLIST.EXE)
-                String vbs = "Const HKLM = &H80000002 'HKEY_LOCAL_MACHINE\n"
-                        + "strComputer = \".\"\n"
-                        + "strKey = \"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\\"\n"
-                        + "strEntry1a = \"DisplayName\"\n"
-                        + "strEntry1b = \"QuietDisplayName\"\n"
-                        + "Set objReg = GetObject(\"winmgmts:{impersonationLevel=impersonate}//\" & _\n"
-                        + "strComputer & \"/root/default:StdRegProv\")\n"
-                        + "objReg.EnumKey HKLM, strKey, arrSubkeys\n"
-                        + "For Each strSubkey In arrSubkeys\n"
-                        + "intRet1 = objReg.GetStringValue(HKLM, strKey & strSubkey, _\n"
-                        + "strEntry1a, strValue1)\n"
-                        + "If intRet1 <> 0 Then\n"
-                        + "objReg.GetStringValue HKLM, strKey & strSubkey, _\n"
-                        + "strEntry1b, strValue1\n"
-                        + "End If\n"
-                        + "If strValue1 <> \"\" Then\n"
-                        + "cscript.echo strValue1\n"
-                        + "End If\n"
-                        + "Next";
-                
-                
-                writeScript.write(vbs);
-                writeScript.close();
-            }
-            
-            return script.getPath();
-        }catch(Exception e){
-            e.printStackTrace();
-            return e.getMessage();
-        }
-    }
-    
-    static List<String> executeScript(String script){
-        try{
-            List<String> processList = new ArrayList<String>();
-            
-            //Java ejecuta el script
-            Process p = Runtime.getRuntime().exec("cscript //NoLogo " + script);
-            BufferedReader input =
-                    new BufferedReader
-                    (new InputStreamReader(p.getInputStream()));
-            
-            //Java captura las lineas de informacion que proporciona el script
-            String line;
-            while ((line = input.readLine()) != null) {
-                System.out.println(line);
-                processList.add(line);
-            }
-            
-            input.close();
-          
-            return processList;
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
     }
     
     /**
@@ -109,13 +46,14 @@ static String writeVbScript(){
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
-        jLabel6 = new javax.swing.JLabel();
+        programs = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        follow = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -134,27 +72,11 @@ static String writeVbScript(){
 
         jLabel4.setText("Favor de seleccionar dentro de la lista de programas que utiliza con mayor frecuencia.");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Aplicación", "Proceso"
-            }
+        programs.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"Programa"}
         ));
-        jScrollPane2.setViewportView(jTable2);
-
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        jLabel6.setText("Programas usados:");
+        jScrollPane2.setViewportView(programs);
 
         jButton1.setText("Añadir >>");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -163,25 +85,47 @@ static String writeVbScript(){
             }
         });
 
+        jButton2.setText("<< Quitar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Siguiente >");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        follow.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] { },
+            new String [] {"Utilizados"}
+        ));
+        jScrollPane3.setViewportView(follow);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton1)
+                                .addComponent(jButton2))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -197,17 +141,18 @@ static String writeVbScript(){
                 .addComponent(jLabel4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(0, 248, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(26, 26, 26)
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
 
@@ -216,16 +161,17 @@ static String writeVbScript(){
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(programs.getSelectedRow() != -1){
+            DefaultTableModel list = (DefaultTableModel) follow.getModel();
+            list.addRow(new Object [] {programs.getValueAt(programs.getSelectedRow(),0)});
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here
-        String script = Configuration.writeVbScript();
-        List<String> processes = Configuration.executeScript(script);        
-        
-        String test = "Adobe Media Player";
-        if(test.matches("(?i).*adobe.*player.*")){
-            System.out.println("Encontrado");
+        DefaultTableModel model = (DefaultTableModel) programs.getModel();
+        for(int c = 0; c <= supported.length; c++){
+            model.addRow(new Object [] {supported[c][0]});
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -233,6 +179,71 @@ static String writeVbScript(){
         // TODO add your handling code here:
 
     }//GEN-LAST:event_formWindowActivated
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(follow.getSelectedRow()!= -1){
+            DefaultTableModel model = (DefaultTableModel) follow.getModel();
+            int pos = follow.getSelectedRow();
+            model.removeRow(pos);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel config = (DefaultTableModel) follow.getModel();
+        
+        int c = 0;
+        int c2 = 0;
+        int rows = config.getRowCount();
+        
+        for(c = 0; c < rows; c++){
+            for(c2 = 0; c2 < supported.length; c2++){
+                if(config.getValueAt(c, 0).equals(supported[c2][0])){
+                    configFile.add(supported[c2][1]);
+                }else{
+                }
+            }
+        }
+
+        try{
+            File txt = new File("config.txt");
+            if(!txt.exists()){
+                txt.createNewFile();
+                BufferedWriter writeConfig = new BufferedWriter(new FileWriter(txt));
+
+                Iterator <String> it = configFile.iterator();
+                
+                while(it.hasNext()){
+                    String proc = it.next();
+                    if(!proc.equals("office")){
+                        writeConfig.write(proc);
+                        writeConfig.newLine();
+                    }else{
+                        writeConfig.write("WINWORD.EXE");
+                        writeConfig.newLine();
+                        writeConfig.write("EXCEL.EXE");
+                        writeConfig.newLine();
+                        writeConfig.write("MSACCESS.EXE");
+                        writeConfig.newLine();
+                        writeConfig.write("MSPUB.EXE");
+                        writeConfig.newLine();
+                        writeConfig.write("POWERPNT.EXE");
+                        writeConfig.newLine();
+                    }
+                }
+
+                writeConfig.close();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        this.setVisible(false);
+        Configuration2 conf = new Configuration2();
+        conf.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
         /*
@@ -275,15 +286,16 @@ static String writeVbScript(){
         
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable follow;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JList jList1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable programs;
     // End of variables declaration//GEN-END:variables
 }

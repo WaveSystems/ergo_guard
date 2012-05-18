@@ -12,9 +12,9 @@ import java.util.*;
  */
 public class Process_trace {
     
-    public String leisure[]={"chrome.exe","Safari.exe","iexplorer.exe","firefox.exe","Skype.exe","msnmsgr.exe","tibia.exe"};
-    public String entertainment[]={"wmplayer.exe","iTunes.exe","vlc.exe"};
-    public String work[]={"WINWORD.EXE","EXCEL.EXE","MSACCESS.EXE","MSPUB.EXE","POWERPNT.EXE"};
+    public String leisure[]={"chrome.exe","Safari.exe","iexplorer.exe","firefox.exe","Skype.exe","msnmsgr.exe","tibia.exe","ares.exe"};
+    public String entertainment[]={"chrome.exe","Safari.exe","iexplorer.exe","firefox.exe","wmplayer.exe","iTunes.exe","vlc.exe","RealPlay.exe"};
+    public String work[]={"chrome.exe","Safari.exe","iexplorer.exe","firefox.exe","WINWORD.EXE","EXCEL.EXE","MSACCESS.EXE","MSPUB.EXE","POWERPNT.EXE","arm.exe"};
     public List<process> processes = new ArrayList<process>();
     
     int countl = 0;
